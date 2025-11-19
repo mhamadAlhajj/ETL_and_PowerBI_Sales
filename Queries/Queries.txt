@@ -1,0 +1,77 @@
+query of creating FactSales
+---------------------------
+
+create table FactSales(
+OrderId int primary key not null ,
+DateId int ,
+CustomerId int,
+ProductId int ,
+Quantity int ,
+Discount float ,
+PaymentMethod nvarchar(15),
+ShippingAddress nvarchar(50),
+Country nvarchar(20),
+SalesRepId int,
+Constraint fk_Date Foreign key (DateId) references Dim_Date(DateID),
+Constraint fk_Customer Foreign key (CustomerId) references Dim_Customers(Customer_Id),
+Constraint fk_Product Foreign key (ProductId) references Dim_Products(ProductID),
+Constraint fk_SalesRep Foreign key (SalesRepId) references Dim_Representative(Rep_Id)
+
+)
+
+
+
+
+query of creating Dim_Customers
+-------------------------------
+
+CREATE TABLE Dim_Customers(
+	[Customer_Id] [int] Primary key NOT NULL,
+	[Customer_FirstName] [nvarchar](20) NULL,
+	[Customer_lastName] [nvarchar](20) NULL,
+	[Customer_Email] [nvarchar](100) NULL,
+	[Customer_Phone] [nvarchar](15) NULL,)
+
+
+query of creating Dim_Date
+---------------------------
+
+
+CREATE TABLE [Dim_Date](
+	[DateID] [int]  Primary key NOT NULL,
+	[Date] [date] NULL,
+	[Year] [int] NULL,
+	[Month] [int] NULL,
+	[Week] [int] NULL,
+	[Day] [int] NULL,
+
+)
+
+
+query of creating Dim_Products
+-------------------------------
+
+CREATE TABLE [Dim_Products](
+	[ProductID] [int] primary key NOT NULL,
+	[ProductName] [nvarchar](100) NOT NULL,
+	[Category] [nvarchar](50) NULL,
+	[SubCategory] [nvarchar](50) NULL,
+	[Brand] [nvarchar](50) NULL,
+	[UnitPrice] [float] NULL,
+)
+
+
+query of creating Dim_Representative
+-------------------------------------
+
+CREATE TABLE [dbo].[Dim_Representative](
+	[Rep_Id] [int] Primary key NOT NULL,
+	[Rep_Name] [nvarchar](30) NULL,)
+
+
+query of creating Dim_Currency
+---------------------------------
+CREATE TABLE [dbo].[Dim_Currency](
+	[Currency] [nvarchar](50) NULL,
+	[CurrencyValue] [float] NULL
+)
