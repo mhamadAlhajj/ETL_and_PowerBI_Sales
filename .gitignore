@@ -1,0 +1,25 @@
+# Build output
+bin/
+obj/
+
+# User-specific project files (machine-specific, not needed in repo)
+*.dtproj.user
+*.user
+*.suo
+
+# Deployment file (optional; not needed for source control)
+*.ispac
+
+# Backup files
+*~
+*.bak
+
+# Script Task temp files
+*.cache
+
+# OS-specific files (optional)
+Thumbs.db
+.DS_Store
+
+# Environment secrets (if you use .env)
+.env
