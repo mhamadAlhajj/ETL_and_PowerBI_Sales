@@ -1,0 +1,21 @@
+query of creating FactSales
+---------------------------
+
+create table FactSales(
+OrderId int primary key not null ,
+DateId int ,
+CustomerId int,
+ProductId int ,
+Quantity int ,
+Discount float ,
+PaymentMethod nvarchar(15),
+ShippingAddress nvarchar(50),
+Country nvarchar(20),
+SalesRepId int,
+Constraint fk_Date Foreign key (DateId) references Dim_Date(DateID),
+Constraint fk_Customer Foreign key (CustomerId) references Dim_Customers(Customer_Id),
+Constraint fk_Product Foreign key (ProductId) references Dim_Products(ProductID),
+Constraint fk_SalesRep Foreign key (SalesRepId) references Dim_Representative(Rep_Id)
+
+)
+

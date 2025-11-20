@@ -1,0 +1,54 @@
+create customers table 
+-------------------------
+
+Create table Customers(
+CustomerId int primary key not null,
+Customer_FName nvarchar(20),
+Customer_LName nvarchar(20),
+CustomerEmail nvarchar (100),
+CustomerPhone nvarchar(15),
+)
+
+
+create products table
+------------------------
+
+Create table products (
+ProductId int primary key not null,
+ProductName nvarchar(100),
+CategoryId int ,
+BrandId int ,
+UnitPrice float
+Constraint FK_Category Foreign key (CategoryId) references [dbo].[Categories](CategoryId) on Delete cascade ,
+Constraint FK_Brand Foreign key (BrandId) references [dbo].[brands](BrandId) on Delete cascade
+)
+
+
+
+
+create categories table 
+-------------------------
+
+create table Categories (
+CategoryId int primary key not null,
+CategoryName nvarchar(100)
+)
+
+
+create brands table
+---------------------
+create table brands (
+BrandId int primary key not null ,
+BrandName nvarchar(30)
+)
+
+
+create subCategories table 
+---------------------------
+
+create table SubCategories(
+SubCategoryId int primary key not null , 
+SubCategory nvarchar(30),
+CategoryId int ,
+Constraint FK_Category_Sub foreign key (CategoryId) references [dbo].[Categories](CategoryId) on Delete Cascade
+)
