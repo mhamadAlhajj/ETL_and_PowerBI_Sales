@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="LakeToWarehouse"
   DTS:PackageType="5"
-  DTS:VersionBuild="116"
-  DTS:VersionGUID="{847A3067-8A31-4769-A550-2EAFA1301F3E}">
+  DTS:VersionBuild="117"
+  DTS:VersionGUID="{E15E6096-3014-47C0-BD8A-574EFEC25486}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

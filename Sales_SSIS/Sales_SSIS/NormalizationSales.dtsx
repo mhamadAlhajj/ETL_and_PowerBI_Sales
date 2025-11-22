@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="43"
-  DTS:VersionGUID="{958CE68B-763E-4F04-8EA4-198B52D3D914}">
+  DTS:VersionBuild="45"
+  DTS:VersionGUID="{A6BBA291-2AC7-4B71-804A-05FA4EF3A721}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,6 +21,10 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{8287DB83-52AA-4AB5-8CCB-3B17D6294BCD}"
       DTS:ObjectName="localhost.Sales_Datalake">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Data Source=localhost;Initial Catalog="+ @[$Package::DataLake_Name] +";Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{8287DB83-52AA-4AB5-8CCB-3B17D6294BCD}localhost."+ @[$Package::DataLake_Name] +";Auto Translate=False;"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::DataLake_Name]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -33,14 +37,40 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{153E36A4-23C3-4361-B693-498384FBE0FC}"
       DTS:ObjectName="localhost.Sales_Normalization">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Data Source=localhost;Initial Catalog="+ @[$Package::NormalizationDatabase] +";Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{8287DB83-52AA-4AB5-8CCB-3B17D6294BCD}localhost."+ @[$Package::NormalizationDatabase]  +";Auto Translate=False;"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::NormalizationDatabase]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Normalization;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{153E36A4-23C3-4361-B693-498384FBE0FC}localhost.Sales_Normalization;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Normalization;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{8287DB83-52AA-4AB5-8CCB-3B17D6294BCD}localhost.Sales_Normalization;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6E02689E-9398-4DC1-BA68-14397E7DEF6A}"
+      DTS:ObjectName="DataLake_Name"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Sales_Datalake</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{8F4D3613-C369-4FDE-8057-D036BB70F58A}"
+      DTS:ObjectName="NormalizationDatabase"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Sales_Normalization</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -4602,10 +4632,47 @@ from (Select distinct SubCategory from Sales_Data) as sub</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="242,229.333333333334"
+          PanelSize="242,230"
           Size="242,272.666666666667"
           Id="Package\Customers container"
           TopLeft="38.9583315917603,112.742688820587" />
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\OrderItems container\delete rows OrderItems table"
+          TopLeft="17.374994998798,11.1008903895077" />
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\OrderItems container\OrderItems  data"
+          TopLeft="39.999992400408,131.145359940968" />
+        <EdgeLayout
+          Id="Package\OrderItems container.PrecedenceConstraints[Constraint]"
+          TopLeft="122.687493699603,53.7675570561744">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,77.3778028847936"
+              Start="0,0"
+              End="0,69.8778028847936">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,69.8778028847936" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="253.333333333334,230.666666666667"
+          Size="253.333333333334,274"
+          Id="Package\OrderItems container"
+          TopLeft="642.291637953993,1311.11695719038" />
         <NodeLayout
           Size="196,42.6666666666667"
           Id="Package\Orders container\delete rows Orders table"
@@ -4902,43 +4969,6 @@ from (Select distinct SubCategory from Sales_Data) as sub</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="216,42.6666666666667"
-          Id="Package\OrderItems container\delete rows OrderItems table"
-          TopLeft="17.374994998798,11.1008903895077" />
-        <NodeLayout
-          Size="160,42.6666666666667"
-          Id="Package\OrderItems container\OrderItems  data"
-          TopLeft="39.999992400408,131.145359940968" />
-        <EdgeLayout
-          Id="Package\OrderItems container.PrecedenceConstraints[Constraint]"
-          TopLeft="122.687493699603,53.7675570561744">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,77.3778028847936"
-              Start="0,0"
-              End="0,69.8778028847936">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,69.8778028847936" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="253.333333333334,230.666666666667"
-          Size="253.333333333334,274"
-          Id="Package\OrderItems container"
-          TopLeft="642.291637953993,1311.11695719038" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="941.648786457611,1242.65412890014">
@@ -5442,6 +5472,77 @@ from (Select distinct SubCategory from Sales_Data) as sub</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Customers container\Customers data\Source Customer data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\OrderItems container\OrderItems  data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\OrderItems container\OrderItems  data\Destination OrderItems table"
+          TopLeft="213.624990271405,262.526311777636" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\OrderItems container\OrderItems  data\Source OrderItems data"
+          TopLeft="232.999989829958,58.8684204666569" />
+        <EdgeLayout
+          Id="Package\OrderItems container\OrderItems  data.Paths[OLE DB Source Output]"
+          TopLeft="329.666656496625,101.535087133324">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.04166622521967,160.991224644312"
+              Start="0,0"
+              End="-8.04166622521967,153.491224644312">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.4956123221562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.4956123221562"
+                    Point2="0,80.4956123221562"
+                    Point3="-4,80.4956123221562" />
+                  <mssgle:LineSegment
+                    End="-4.04166622521967,80.4956123221562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.04166622521967,80.4956123221562"
+                    Point2="-8.04166622521967,80.4956123221562"
+                    Point3="-8.04166622521967,84.4956123221562" />
+                  <mssgle:LineSegment
+                    End="-8.04166622521967,153.491224644312" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\OrderItems container\OrderItems  data\Destination OrderItems table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\OrderItems container\OrderItems  data\Source OrderItems data">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -5973,77 +6074,6 @@ from (Select distinct SubCategory from Sales_Data) as sub</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\SubCategories container\SubCategories data\Source Categories data">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\OrderItems container\OrderItems  data">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="216,42.6666666666667"
-          Id="Package\OrderItems container\OrderItems  data\Destination OrderItems table"
-          TopLeft="213.624990271405,262.526311777636" />
-        <NodeLayout
-          Size="193.333333333334,42.6666666666667"
-          Id="Package\OrderItems container\OrderItems  data\Source OrderItems data"
-          TopLeft="232.999989829958,58.8684204666569" />
-        <EdgeLayout
-          Id="Package\OrderItems container\OrderItems  data.Paths[OLE DB Source Output]"
-          TopLeft="329.666656496625,101.535087133324">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-8.04166622521967,160.991224644312"
-              Start="0,0"
-              End="-8.04166622521967,153.491224644312">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.4956123221562" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,76.4956123221562"
-                    Point2="0,80.4956123221562"
-                    Point3="-4,80.4956123221562" />
-                  <mssgle:LineSegment
-                    End="-4.04166622521967,80.4956123221562" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4.04166622521967,80.4956123221562"
-                    Point2="-8.04166622521967,80.4956123221562"
-                    Point3="-8.04166622521967,84.4956123221562" />
-                  <mssgle:LineSegment
-                    End="-8.04166622521967,153.491224644312" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\OrderItems container\OrderItems  data\Destination OrderItems table">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\OrderItems container\OrderItems  data\Source OrderItems data">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
