@@ -13,8 +13,8 @@ SSIS (SQL Server Integration Services, via Visual Studio)
 
 Power BI
 
-Getting Started
-----------------
+Getting Started (with Fact/Dim tables)
+---------------------------------------
 Step 1: Set Up Databases
 -------------------------
 
@@ -58,3 +58,34 @@ Step 4: Run the ETL Process
 -----------------------------
 
 After configuring the parameters and enabling the currency component, execute the SSIS package to move and transform the data from the DataLake to the DataWarehouse.
+
+
+
+
+Getting Started with Normalization
+-----------------------------------
+1. Set Up the Database
+-----------------------
+
+A source database (datalake) already exists.
+To create the Normalization database in SQL Server Management Studio (SSMS):
+
+Navigate to the queries folder in this repository.
+
+Open the normalization.txt file.
+
+Run the script in SSMS to create the Normalization database.
+
+2. Configure SSIS Parameters
+------------------------------
+
+This project uses two parameters in SSIS:
+
+DatalakeName – the name of your existing datalake database
+
+NormalizationDBName – the name of your new Normalization database
+
+Update these parameters to match the database names you created in your environment.
+
+
+
