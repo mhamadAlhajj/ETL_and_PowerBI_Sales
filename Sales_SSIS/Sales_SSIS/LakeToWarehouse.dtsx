@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="LakeToWarehouse"
   DTS:PackageType="5"
-  DTS:VersionBuild="107"
-  DTS:VersionGUID="{88A7600A-91CB-42C9-92AA-8D3EB795CF8A}">
+  DTS:VersionBuild="117"
+  DTS:VersionGUID="{E15E6096-3014-47C0-BD8A-574EFEC25486}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -21,11 +21,20 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{260BDB3E-D9EC-4A45-9C4F-DA6AD60C943F}"
       DTS:ObjectName="localhost.Sales_Datalake">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Data Source=localhost;"
++ "Initial Catalog=" + @[$Package::DataLake_Name]  + ";"
++ "Provider=MSOLEDBSQL.1;"
++ "Integrated Security=SSPI;"
++ "Application Name=SSIS-LakeToWarehouse-{260BDB3E-D9EC-4A45-9C4F-DA6AD60C943F}localhost." 
++ @[$Package::DataLake_Name]  + "; Auto Translate=False;"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::DataLake_Name]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Datalake;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-LakeToWarehouse-{260BDB3E-D9EC-4A45-9C4F-DA6AD60C943F}localhost.Sales_Datalake;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Datalake;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-LakeToWarehouse-{260BDB3E-D9EC-4A45-9C4F-DA6AD60C943F}localhost.Sales_Datalake; Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,14 +42,47 @@
       DTS:CreationName="OLEDB"
       DTS:DTSID="{A85AF721-9544-43F0-B4FD-2E901B90EE2A}"
       DTS:ObjectName="localhost.Sales_Datawarehouse">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"Data Source=localhost;"
++ "Initial Catalog=" + @[$Package::DataWarehouse_Name]  + ";"
++ "Provider=MSOLEDBSQL.1;"
++ "Integrated Security=SSPI;"
++ "Application Name=SSIS-LakeToWarehouse-{A85AF721-9544-43F0-B4FD-2E901B90EE2A}localhost." + @[$Package::DataWarehouse_Name] +";
+Auto Translate=False;"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::DataWarehouse_Name]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Datawarehouse;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-LakeToWarehouse-{A85AF721-9544-43F0-B4FD-2E901B90EE2A}localhost.Sales_Datawarehouse;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Sales_Datawarehouse;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-LakeToWarehouse-{A85AF721-9544-43F0-B4FD-2E901B90EE2A}localhost.Sales_Datawarehouse;&#xA;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="the name of the database (datalake) in your local SSMS"
+      DTS:DTSID="{38E6803D-E6A6-442C-ACC4-BA9F3E858813}"
+      DTS:ObjectName="DataLake_Name"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Sales_Datalake</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="the name of the database (datawarehouse) in your local SSMS"
+      DTS:DTSID="{B6EAF90A-0F68-4F97-9EDE-CB70FE0EDEFE}"
+      DTS:ObjectName="DataWarehouse_Name"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Sales_Datawarehouse</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -4634,7 +4676,7 @@ where [refTable].[Date] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="555.333333333334,929.333333333334"
+          PanelSize="555.333333333334,930"
           Size="555.333333333334,972.666666666667"
           Id="Package\Sales Container"
           TopLeft="45.4166646363836,61.7309934742527" />
@@ -5292,7 +5334,7 @@ where [refTable].[Date] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -5302,7 +5344,7 @@ where [refTable].[Date] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

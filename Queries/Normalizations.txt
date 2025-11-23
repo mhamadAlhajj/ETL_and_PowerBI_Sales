@@ -1,0 +1,96 @@
+create customers table 
+-------------------------
+
+Create table Customers(
+CustomerId int primary key not null,
+Customer_FName nvarchar(20),
+Customer_LName nvarchar(20),
+CustomerEmail nvarchar (100),
+CustomerPhone nvarchar(15),
+)
+
+
+create products table
+------------------------
+
+Create table products (
+ProductId int primary key not null,
+ProductName nvarchar(100),
+Cat_SubCategoryId int ,
+BrandId int ,
+UnitPrice float
+Constraint FK_Category Foreign key (Cat_SubCategoryId) references [dbo].[Cat_SubCategories](Cat_SubCategories_Id)  on Delete cascade ,
+Constraint FK_Brand Foreign key (BrandId) references [dbo].[brands](BrandId) on Delete cascade
+)
+
+
+
+
+
+
+create categories table 
+-------------------------
+
+create table Categories (
+CategoryId int primary key not null,
+CategoryName nvarchar(100)
+)
+
+
+create brands table
+---------------------
+create table brands (
+BrandId int primary key not null ,
+BrandName nvarchar(30)
+)
+
+
+create subCategories table 
+---------------------------
+
+create table SubCategories(
+SubCategoryId int primary key not null , 
+
+)
+
+
+create Cat_SubCategories table
+-------------------------------
+create table Cat_SubCategories(
+Cat_SubCategories_Id int primary key not null ,
+SubCategoryId int , 
+CategoryId int,
+constraint FK_CategoryWithSub foreign key (CategoryId) references [dbo].[Categories](CategoryId) on Delete cascade ,
+constraint FK_SubWithCategory foreign key (SubCategoryId) references [dbo].[SubCategories](SubCategoryId) on Delete cascade,
+)
+
+create table representative 
+---------------------------
+Create table Representative(
+RepresentativeId int primary key not null,
+RepresentativeName nvarchar(30)
+)
+
+create table orders
+-------------------
+CREATE TABLE [dbo].[Orders](
+	[OrderId] [int] NOT NULL,
+	[OrderDate] [date] NULL,
+	[CustomerId] [int] NULL,
+	[SalesRepId] [int] NULL,
+	[PaymentMethod] [nvarchar](30) NULL,
+constraint FK_CustomerOrders foreign key (CustomerId) references [dbo].[Customers] ([CustomerId]) on delete cascade ,
+constraint FK_RepresentativeOrders foreign key (SalesRepId) references [dbo].[Representative] ([RepresentativeId]) on delete cascade 
+)
+
+create table orderItem
+------------------------
+create table orderItems(
+OrderItem_Id int primary key not null ,
+ProductId int , 
+OrderId int ,
+Quantity int ,
+discount float ,
+constraint FK_ProductItem foreign key (ProductId) references [dbo].[products](ProductId) on delete Cascade,
+constraint FK_OrderItem foreign key (OrderId) references [dbo].[Orders](OrderId) on delete cascade
+)
