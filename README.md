@@ -1,8 +1,8 @@
-# ETL_and_PowerBI_Sales
+# ETLSales
 
 Read before start :
 
-This project demonstrates an ETL process using SSIS and the creation of a Power BI dashboard for sales data.
+This project demonstrates an ETL process using SSIS .
 
 Tools Used
 -----------
@@ -11,7 +11,6 @@ SSMS (SQL Server Management Studio)
 
 SSIS (SQL Server Integration Services, via Visual Studio)
 
-Power BI
 
 Getting Started (with Fact/Dim tables)
 ---------------------------------------
